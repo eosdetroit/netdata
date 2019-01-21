@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<html lang="en">
+<head>
+    <title>Custom Dashboard</title>
+    <meta name="application-name" content="netdata">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-darkness/jquery-ui.css'>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>var netdataTheme = 'slate';</script>
+  <script type="text/javascript" src="http://my-netdata.io/dashboard.js"></script>
+</head>
+<body>
+
+<div class="container tabs" id="container">
+    <ul id="groups-tabs">
+        <li><a href="#gauge">Gauge.js</a></li>
+        <li><a href="#parent-1">Spring</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div id="parent-1" class="tabs">
+
+            <div id="child" class="tabs">
+                <ul>
+
+                    <li><a href="#child-1">Hiking</a></li>
+                    <li><a href="#child-2">Biking</a></li>
+
+                </ul>
+
+                <div id="child-1">
+                    <h3>Hiking</h3>
+                    <div style="display: inline-block; width: 35.8%">
+		        <div style="font-size: 1.2vw; color: #666; padding-top: 10px;"><i class="fa fa-comment"></i> I can trace an issue like this</div>
+		        <br/>
+		        <div data-netdata="example.random2"
+		                data-dimensions="random"
+		                data-chart-library="gauge"
+		                data-gauge-max-value="32767"
+		                data-width="100%"
+		                data-after="-600"
+		                data-points="600"
+		                data-title="1/second (netdata&nbsp;default)"
+		                data-units="important metric"
+		                data-colors="#5A5"
+		                ></div>
+		    </div>
+                </div>
+                <div id="child-2">
+                    <h3>Biking</h3>
+                    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="gauge">
+
+            <div style="display: inline-block; width: 35.8%">
+                <div style="font-size: 1.2vw; color: #666; padding-top: 10px;"><i class="fa fa-comment"></i> I can trace an issue like this</div>
+                <br/>
+                <div data-netdata="example.random2"
+                        data-dimensions="random"
+                        data-chart-library="gauge"
+                        data-gauge-max-value="32767"
+                        data-width="100%"
+                        data-after="-600"
+                        data-points="600"
+                        data-title="1/second (netdata&nbsp;default)"
+                        data-units="important metric"
+                        data-colors="#5A5"
+                        ></div>
+            </div>
+            <div style="display: inline-block; width: 50%">
+                <div style="font-size: 1.2vw; color: #666;"><i class="fa fa-comment"></i> Can you trace an issue like these?<br/>&nbsp;<br/></div>
+                <div data-netdata="example.random2"
+                        data-dimensions="random"
+                        data-chart-library="gauge"
+                        data-gauge-max-value="32767"
+                        data-width="45%"
+                        data-after="-600"
+                        data-points="60"
+                        data-title="Updates Every 10&nbsp;Sec"
+                        data-units="important metric"
+                        data-colors="#C55"
+                        ></div>
+                <div data-netdata="example.random2"
+                        data-dimensions="random"
+                        data-chart-library="gauge"
+                        data-gauge-max-value="32767"
+                        data-width="45%"
+                        data-after="-600"
+                        data-points="2"
+                        data-title="Updates Every 5&nbsp;Mins"
+                        data-units="important metric"
+                        data-colors="#C55"
+                        ></div>
+            </div>
+        </div>        
+</div>
+<script type="text/javascript">
+$( document ).ready(function() {
+
+	$.getJSON('https://monitor.eosdetroit.io/nodes.json', function(json) {
+		$.each(json, function(key, value){
+			$.each(value, function(key, value){
+				var group = key;
+				var nodes = value;
+				var group_id = group.replace(/ /g, '-');	
+				$("#groups-tabs").append( "<li><a href='#" + group_id + "'>" + group +  "</a></li>" );
+				$('#container').append(
+					"<div class='nodes-tabs' id='" + group_id + "'>" +
+						"<ul id='nodes-tabs-" + group_id + "'>" +
+    						"</ul>" +
+					"</div>");
+
+
+				$.each(nodes, function( index, value ) {
+					//$("#nodes-tabs-" + group_id).append(
+					//	"<li><a href='#nodes-tabs-content-" + value + "'>" + value + "</a></li>"
+					//);
+					$("#nodes-tabs-" + group_id ).append(
+						"<li><a href='#nodes-tabs-content-" + value + "'>" + value + "</a></li>"
+					);
+					$("#" + group_id).append(
+						"<div style='display: inline-block; width: 35.8%' id=#nodes-tabs-content-'" + value + "'>" +
+					                "<div style='font-size: 1.2vw; color: #666; padding-top: 10px;'><i class='fa fa-comment'> I can trace an issue like this</i></div>" +
+					                "<br/>" +
+					                "<div data-netdata='example.random2'" +
+                						"data-dimensions='random'" +
+                						"data-chart-library='gauge'" +
+                						"data-gauge-max-value='32767'" +
+                						"data-width='100%'" +
+                						"data-after='-600'" +
+                						"data-points='600'" +
+                						"data-title='1/second (netdata&nbsp;default)'" +
+                						"data-units='important metric'" +
+                						"data-colors='#5A5'" +
+                					"></div>" +
+					        "</div>"
+					);
+				});
+
+
+				//$('#' + group_id).tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
+
+
+			});
+		});
+	});
+/*
+	$("#container").tabs();
+	$( ".ui-tabs-nav" ).sortable({
+		axis: "x",
+		stop: function() {
+			tabs.tabs( "refresh" );
+		}
+	});
+*/
+});
+</script>
+</body>
+</html>
