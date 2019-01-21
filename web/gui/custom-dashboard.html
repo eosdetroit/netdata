@@ -120,7 +120,7 @@ $( document ).ready(function() {
 				var group_id = group.replace(/ /g, '-');	
 				$("#groups-tabs").append( "<li><a href='#" + group_id + "'>" + group +  "</a></li>" );
 				$('#container').append(
-					"<div class='nodes-tabs' id='" + group_id + "'>" +
+					"<div class='tabs' id='" + group_id + "'>" +
 						"<ul id='nodes-tabs-" + group_id + "'>" +
     						"</ul>" +
 					"</div>");
@@ -157,7 +157,9 @@ $( document ).ready(function() {
 
 
 			});
+
 		});
+		$(".tabs").tabs();
 	});
 /*
 	$("#container").tabs();
