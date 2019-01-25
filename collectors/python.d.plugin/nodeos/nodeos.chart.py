@@ -11,14 +11,23 @@ from dateutil.parser import parse
 
 
 ORDER = [
-    'sync'
+    'sync',
+    'ram'
 ]
 
 CHARTS = {
     'sync': {
-        'options': [None, 'Blockchain Synchronization', 'ms', 'ms', 'nodeos.sync', 'line'],
+        'options': [None, 'Synchronization', 'ms', 'ms', 'nodeos.sync', 'line'],
         'lines': [
-            ['latency', None, 'incremental']
+            ['latency']
+        ]
+    },
+    'ram': {
+        'options': [None, 'RAM', 'ms', 'ms', 'nodeos.ram', 'line'],
+        'lines': [
+            ['size'],
+            ['free_bytes'],
+            ['used_bytes']
         ]
     }	
 }
@@ -37,22 +46,20 @@ class Service(UrlService):
         :return: dict
         """
         try:
-        	raw = self._get_raw_data().split(" ")
-
-		data = json.loads(raw[0])
-		#print(data)
+        	data = json.loads(self._get_raw_data(self.url + '/v1/chain/get_info'))
 		head_block_time = parse(data["head_block_time"])
 		now = datetime.datetime.now()
-		diff = (now - head_block_time).total_seconds() + self.configuration.get('offset_hours') * 60 * 60
-
+		diff = (now - head_block_time).total_seconds() + self.configuration.get('timezone_offset') * 60 * 60
 #	    	import pdb; pdb.set_trace()
-
-
 		result = {
-#			'head_block_num': int(data["head_block_num"]),
+			'head_block_num': int(data["head_block_num"]),
 			'latency': diff * 1000
 		}
-		#print(data)
+		#db_size
+		data = json.loads(self._get_raw_data(self.url + '/v1/db_size/get'))
+		result['free_bytes'] = int(data['free_bytes'])
+		result['used_bytes'] = int(data['used_bytes'])
+		result['size'] = int(data['size'])
 
             	return result
         except (ValueError, AttributeError):
