@@ -17,20 +17,24 @@ ORDER = [
 
 CHARTS = {
     'sync': {
-        'options': [None, 'Synchronization', 'ms', 'ms', 'nodeos.sync', 'line'],
+        'options': [None, 'Synchronization', 'ms', 'sync', 'nodeos.sync', 'line'],
         'lines': [
             ['latency']
         ]
     },
     'ram': {
-        'options': [None, 'RAM', 'ms', 'ms', 'nodeos.ram', 'line'],
+        'options': [None, 'RAM', 'percentage', 'ram', 'nodeos.ram', 'stacked'],
         'lines': [
-            ['size'],
-            ['free'],
-            ['used']
+            ['free', 'free', 'percentage-of-absolute-row'],
+            ['used', 'used', 'percentage-of-absolute-row']
         ]
     }	
 }
+
+#        'options': [name, title, units, family, context, charttype],
+#        'lines': [
+#            [unique_dimension_name, name, algorithm, multiplier, divisor]
+
 
 
 class Service(UrlService):
@@ -57,10 +61,9 @@ class Service(UrlService):
 		}
 		#db_size
 		data = json.loads(self._get_raw_data(self.url + '/v1/db_size/get'))
-		result['free'] = int(data['free_bytes'])
+		result['free'] = int(data['free_bytes']) #/ 1048576
 		result['used'] = int(data['used_bytes'])
-		result['size'] = int(data['size'])
-
+		result['size'] = int(data['size']) 
             	return result
         except (ValueError, AttributeError):
             return None

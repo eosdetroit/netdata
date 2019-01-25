@@ -23,12 +23,50 @@
 		    	data-after="-300"
 		    	data-points="100"
 		    	></div>
+		<div data-netdata="nodeos_local.ram"
+			data-chart-library="gauge"
+		    	data-width="250"
+		    	data-height="200"
+		    	data-after="-300"
+		    	data-points="100"
+		    	></div>
+		<div data-netdata="system.ram"
+			data-dimensions="used|buffers|active|wired"
+			data-append-options="percentage"
+			data-chart-library="easypiechart"
+			data-title="Used RAM"
+			data-units="%"
+			data-easypiechart-max-value="100"
+			data-width="9%"
+			data-after="-300"
+		    	data-points="100"
+			></div>
+		<div data-netdata="system.ram_percentage"
+			data-dimensions="used|free"
+			data-append-options="percentage"
+			data-chart-library="easypiechart"
+			data-title="Used RAM"
+			data-units="%"
+			data-easypiechart-max-value="100"
+			data-width="9%"
+			data-after="-300"
+		    	data-points="100"
+			></div>
+
 		<div data-netdata="nodeos_local.sync"
 			data-chart-library="dygraph"
 			data-width="100%"
 			data-height="200"
 			data-after="-300"
 			></div>
+		<div data-netdata="nodeos_local.ram"
+			data-chart-library="dygraph"
+			data-width="100%"
+			data-desired-units="GB"
+			data-height="200"
+			data-after="-300"
+			></div>
+
 	</div>
 </body>
 </html>
