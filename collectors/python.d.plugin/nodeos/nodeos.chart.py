@@ -23,7 +23,7 @@ CHARTS = {
         ]
     },
     'ram': {
-        'options': [None, 'RAM', 'percentage', 'ram', 'nodeos.ram', 'stacked'],
+        'options': [None, 'RAM', '%', 'ram', 'nodeos.ram', 'stacked'],
         'lines': [
             ['free', 'free', 'percentage-of-absolute-row'],
             ['used', 'used', 'percentage-of-absolute-row']
