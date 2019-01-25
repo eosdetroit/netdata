@@ -4,46 +4,23 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from bases.FrameworkServices.UrlService import UrlService
+import json
+import dateutil
+import datetime
+from dateutil.parser import parse
 
 
 ORDER = [
-    'connections',
-    'requests',
-    'sync_status',
-    'connect_rate',
+    'sync'
 ]
 
 CHARTS = {
-    'connections': {
-        'options': [None, 'Active Connections', 'connections', 'active connections',
-                    'nodeos.connections', 'line'],
+    'sync': {
+        'options': [None, 'Blockchain Synchronization', 'ms', 'ms', 'nodeos.sync', 'line'],
         'lines': [
-            ['active']
+            ['latency', None, 'incremental']
         ]
-    },
-    'requests': {
-        'options': [None, 'Requests', 'requests/s', 'requests', 'nodeos.requests', 'line'],
-        'lines': [
-            ['requests', None, 'incremental']
-        ]
-    },
-    'sync_status': {
-        'options': [None, 'Active Connections by Status', 'connections', 'status',
-                    'nodeos.sync_status', 'line'],
-        'lines': [
-            ['reading'],
-            ['writing'],
-            ['waiting', 'idle']
-        ]
-    },
-    'connect_rate': {
-        'options': [None, 'Connections Rate', 'connections/s', 'connections rate',
-                    'nodeos.connect_rate', 'line'],
-        'lines': [
-            ['accepts', 'accepted', 'incremental'],
-            ['handled', None, 'incremental']
-        ]
-    }
+    }	
 }
 
 
@@ -60,13 +37,23 @@ class Service(UrlService):
         :return: dict
         """
         try:
-            raw = self._get_raw_data().split(" ")
-            return {'active': int(raw[2]),
-                    'requests': int(raw[9]),
-                    'reading': int(raw[11]),
-                    'writing': int(raw[13]),
-                    'waiting': int(raw[15]),
-                    'accepts': int(raw[7]),
-                    'handled': int(raw[8])}
+        	raw = self._get_raw_data().split(" ")
+
+		data = json.loads(raw[0])
+		#print(data)
+		head_block_time = parse(data["head_block_time"])
+		now = datetime.datetime.now()
+		diff = (now - head_block_time).total_seconds() + self.configuration.get('offset_hours') * 60 * 60
+
+#	    	import pdb; pdb.set_trace()
+
+
+		result = {
+#			'head_block_num': int(data["head_block_num"]),
+			'latency': diff * 1000
+		}
+		#print(data)
+
+            	return result
         except (ValueError, AttributeError):
             return None
