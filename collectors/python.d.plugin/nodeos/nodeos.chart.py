@@ -26,8 +26,8 @@ CHARTS = {
         'options': [None, 'RAM', 'ms', 'ms', 'nodeos.ram', 'line'],
         'lines': [
             ['size'],
-            ['free_bytes'],
-            ['used_bytes']
+            ['free'],
+            ['used']
         ]
     }	
 }
@@ -57,8 +57,8 @@ class Service(UrlService):
 		}
 		#db_size
 		data = json.loads(self._get_raw_data(self.url + '/v1/db_size/get'))
-		result['free_bytes'] = int(data['free_bytes'])
-		result['used_bytes'] = int(data['used_bytes'])
+		result['free'] = int(data['free_bytes'])
+		result['used'] = int(data['used_bytes'])
 		result['size'] = int(data['size'])
 
             	return result
