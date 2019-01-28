@@ -1,0 +1,106 @@
+{
+	"EOS Mainnet": {
+		"eos-bp": {
+			"host_ip":	"10.0.1.204",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "eos-bp1-aws"
+		},
+		"eos-api": {
+			"host_ip":	"10.0.1.31",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "eos-api2-aws"
+		},
+		"eos-seed": {
+			"host_ip":	"10.0.1.93",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "eos-seed-aws"
+		}
+	},
+	"Worbli Mainnet": {
+		"worbli-bp": {
+			"host_ip":	"10.0.1.13",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "worbli-bp1-aws"
+		},
+		"worbli-api": {
+			"host_ip":	"10.0.0.125",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "worbli-api1-aws"
+		},
+		"worbli-seed": {
+			"host_ip":	"10.0.0.93",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "worbli-seed-aws"
+		}
+	},
+	"Telos Mainnet": {
+		"telos-full": {
+			"host_ip":	"localhost",
+			"api_port":	"8888",
+			"active": "true",
+			"hostname": "slimmy"
+		},
+		"telos-bp": {
+			"host_ip":	"11.0.2.7",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "telos-bp1-aws"
+		},
+		"telos-api": {
+			"host_ip":	"11.0.1.101",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "telos-api1-aws"
+		},
+		"telos-seed": {
+			"host_ip":	"11.0.1.108",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "telos-seed-aws"
+		}
+	},
+	"Testnets": {
+		"eos-testnet-jungle": {
+			"host_ip":	"172.31.23.124",
+			"api_port":	"8888",
+			"active": "false",
+			"hostname": "eos-testnet-jungle-aws"
+		},
+		"eos-testnet-cryptokylin": {
+			"host_ip":	"172.31.27.10",
+			"api_port":	"8888",
+			"active": "false",
+			"hostname": "eos-testnet-cryptokylin-aws"
+		},
+		"worbli-testnet": {
+			"host_ip":	"10.0.0.131",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "worbli-testnet-aws"
+		},
+		"telos-testnet": {
+			"host_ip":	"172.31.27.10",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "telos-testnet-aws"
+		},
+		"uos-testnet": {
+			"host_ip":	"172.31.27.10",
+			"api_port":	"9282",
+			"active": "false",
+			"hostname": "uos-testnet-aws"
+		},
+		"telos-stagenet": {
+			"host_ip":	"172.31.17.115",
+			"api_port":	"8282",
+			"active": "false",
+			"hostname": "telos-stagenet-aws"
+		}
+	}
+}
