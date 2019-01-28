@@ -46,6 +46,9 @@ dist_noinst_DATA = \
 	$(NULL)
 
 dist_web_DATA = \
+	nodeos/index.html \
+	nodeos/custom.html \
+	nodeos/hosts.json \
 	demo.html \
 	demo2.html \
 	demosites.html \
