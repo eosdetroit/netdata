@@ -1,0 +1,16 @@
+{
+	"My Nodes": {
+		"telos-full": {
+			"host_ip":	"127.0.0.1",
+			"api_port":	"8888",
+			"active": 	"true",
+			"hostname": 	"slimmy"
+		},
+		"eos-testnet-jungle": {
+			"host_ip":	"127.0.0.1",
+			"api_port":	"8889",
+			"active": 	"true",
+			"hostname": 	"slimmy"
+		}
+	}
+}

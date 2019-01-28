@@ -2,7 +2,7 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <html lang="en">
 <head>
-	<title>Custom Dashboard</title>
+	<title>Nodeos Dashboard</title>
 	<meta name="application-name" content="netdata">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta charset="utf-8">
@@ -31,8 +31,6 @@
 $( document ).ready(function() {
 	$.getJSON('hosts.json', function(json) {
 		$.each(json, function(group, nodes){
-				//var group = key;
-				//var nodes = value;
 				var group_id = group.replace(/ /g, '-');	
 				$("#groups-tabs").append( "<li><a href='#" + group_id + "'>" + group +  "</a></li>" );
 				$('#container').append(
@@ -72,7 +70,6 @@ $( document ).ready(function() {
 		NETDATA.start();
 	});
 /*
-	$("#container").tabs();
 	$( ".ui-tabs-nav" ).sortable({
 		axis: "x",
 		stop: function() {
