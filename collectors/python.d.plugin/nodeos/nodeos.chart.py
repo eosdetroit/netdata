@@ -12,23 +12,31 @@ from dateutil.parser import parse
 
 ORDER = [
     'sync',
-    'ram'
+    'ram',
+    'ram_absolute'
 ]
 
 CHARTS = {
     'sync': {
-        'options': [None, 'Synchronization', 'ms', 'sync', 'nodeos.sync', 'line'],
+        'options': [None, 'Nodeos Synchronization', 'ms', 'sync', 'nodeos.sync', 'line'],
         'lines': [
             ['latency']
         ]
     },
     'ram': {
-        'options': [None, 'RAM', '%', 'ram', 'nodeos.ram', 'stacked'],
+        'options': [None, 'Nodeos RAM', '%', 'ram', 'nodeos.ram', 'stacked'],
         'lines': [
             ['free', 'free', 'percentage-of-absolute-row'],
             ['used', 'used', 'percentage-of-absolute-row']
         ]
-    }	
+    },
+    'ram_absolute': {
+        'options': [None, 'Nodeos RAM', 'B', 'ram', 'nodeos.ram', 'stacked'],
+        'lines': [
+            ['free'],
+            ['used']
+        ]
+    }		
 }
 
 #        'options': [name, title, units, family, context, charttype],
