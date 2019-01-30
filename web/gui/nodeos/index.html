@@ -2,134 +2,196 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <html lang="en">
 <head>
-    <title>Nodeos Dashboard</title>
-    <meta name="application-name" content="netdata">
+	<title>Nodeos Dashboard</title>
+	<meta name="application-name" content="netdata">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+	<link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-darkness/jquery-ui.css'>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		var netdataTheme = 'slate';
+		var netdataDontStart = true;
+	</script>
+	<script type="text/javascript" src="http://localhost:19999/dashboard.js"></script>
 </head>
-<script>var netdataTheme = 'slate';</script>
-<script type="text/javascript" src="dashboard.js"></script>
 <body>
-	<div style="width: 100%; text-align: center;">
-		<div data-netdata="nodeos_local.sync"
-			data-chart-library="gauge"
-			data-width="250"
-            		data-height="200"
-			data-after="-86400"
-			data-points="100"
-			data-units="ms"
-			data-gauge-generate-gradient="[0, 250, 500]"
-			data-gauge-gradient-percent-color-0="#a9d70b"
-			data-gauge-gradient-percent-color-250="#f9c802"
-			data-gauge-gradient-percent-color-500="#ff0000"
-			data-gauge-gradient-stroke-color="#E0E0E0"
-			></div>
-		<div data-netdata="nodeos_local.ram"
-			data-chart-library="gauge"
-			data-append-options="percentage"
-			data-dimensions="used"
-			data-gauge-max-value="100"
-			data-units="%"
-			data-width="250"
-            		data-height="200"
-			data-after="-86400"
-			data-points="100"
-			data-gauge-generate-gradient="[0, 75, 90]"
-			data-gauge-gradient-percent-color-0="#a9d70b"
-			data-gauge-gradient-percent-color-75="#f9c802"
-			data-gauge-gradient-percent-color-90="#ff0000"
-			data-gauge-gradient-stroke-color="#E0E0E0"
-			></div>
-		<div data-netdata="system.ram"
-			data-chart-library="gauge"
-			data-append-options="percentage"
-			data-dimensions="used"
-			data-gauge-max-value="100"
-			data-units="%"
-			data-width="250"
-            		data-height="200"
-			data-after="-86400"
-			data-points="100"
-			data-gauge-generate-gradient="[0, 80, 90]"
-			data-gauge-gradient-percent-color-0="#a9d70b"
-			data-gauge-gradient-percent-color-80="#f9c802"
-			data-gauge-gradient-percent-color-90="#ff0000"
-			data-gauge-gradient-stroke-color="#E0E0E0"
-			></div>
-		<div data-netdata="system.swap"
-			data-chart-library="gauge"
-			data-append-options="percentage"
-			data-dimensions="used"
-			data-gauge-max-value="100"
-			data-units="%"
-			data-width="250"
-            		data-height="200"
-			data-after="-86400"
-			data-points="100"
-			data-gauge-generate-gradient="[0, 80, 90]"
-			data-gauge-gradient-percent-color-0="#a9d70b"
-			data-gauge-gradient-percent-color-80="#f9c802"
-			data-gauge-gradient-percent-color-90="#ff0000"
-			data-gauge-gradient-stroke-color="#E0E0E0"
-			></div>
-		<div data-netdata="disk_space._"
-			data-chart-library="gauge"
-			data-append-options="percentage"
-			data-dimensions="used"
-			data-gauge-max-value="100"
-			data-units="%"
-			data-width="250"
-            		data-height="200"
-			data-after="-86400"
-			data-points="100"
-			data-gauge-generate-gradient="[0, 80, 90]"
-			data-gauge-gradient-percent-color-0="#a9d70b"
-			data-gauge-gradient-percent-color-80="#f9c802"
-			data-gauge-gradient-percent-color-90="#ff0000"
-			data-gauge-gradient-stroke-color="#E0E0E0"
-			></div>
-
-
-		<div data-netdata="nodeos_local.sync"
-			data-chart-library="dygraph"
-			data-width="500"
-			data-height="200"
-			data-after="-86400"
-			></div>
-		<div data-netdata="nodeos_local.ram_absolute"
-			data-chart-library="dygraph"
-			data-width="500"
-			data-desired-units="GiB"
-			data-height="200"
-			data-after="-86400"
-			></div>
-		<div data-netdata="system.ram"
-			data-chart-library="dygraph"
-			data-width="500"
-			data-desired-units="GiB"
-			data-height="200"
-			data-after="-86400"
-			></div>
-		<div data-netdata="system.swap"
-			data-chart-library="dygraph"
-			data-width="500"
-			data-desired-units="GiB"
-			data-height="200"
-			data-after="-86400"
-			></div>
-		<div data-netdata="disk_space._"
-			data-chart-library="dygraph"
-			data-width="500"
-			data-desired-units="GiB"
-			data-height="200"
-			data-after="-86400"
-			></div>
-
+	<div class="tabs" id="container">
+		<ul id="groups-tabs"/>
 	</div>
 </body>
+<script type="text/javascript">
+$( document ).ready(function() {
+	$.getJSON('nodeos/hosts.json', function(json) {
+		$.each(json, function(group, nodes){
+				var group_id = group.replace(/ /g, '-');	
+				$("#groups-tabs").append( "<li><a href='#" + group_id + "'>" + group +  "</a></li>" );
+				$('#container').append(
+					"<div class='tabs' id='" + group_id + "'>" +
+						"<ul id='nodes-tabs-" + group_id + "'>" +
+    						"</ul>" +
+					"</div>");
+				$.each(nodes, function( name, params ) {
+					if (params["active"] == "true"){
+						var hostname = params["hostname"];
+						$("#nodes-tabs-" + group_id ).append(
+							"<li><a href='#nodes-tabs-content-" + name + "'>" + name + "</a></li>"
+						);
+						$("#" + group_id).append(
+							"<div style='display: inline-block; width: 100%' id='nodes-tabs-content-" + name + "'>" +
+								"<div style='display: inline-block; width: 100%'>" +
+									"<div data-netdata='nodeos_" +  name + ".sync'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='gauge'" +
+										"data-width='300'" +
+										"data-height='200'" +
+										"data-after='-86400'" +
+										"data-points='100'" +
+										"data-units='ms'" +
+										"data-gauge-generate-gradient='[0, 250, 500]'" +
+										"data-gauge-gradient-percent-color-0='#a9d70b'" +
+										"data-gauge-gradient-percent-color-250='#f9c802'" +
+										"data-gauge-gradient-percent-color-500='#ff0000'" +
+										"data-gauge-gradient-stroke-color='#E0E0E0'" +
+									"></div>" +
+									"<div data-netdata='nodeos_" +  name + ".ram'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='gauge'" +
+										"data-append-options='percentage'" +
+										"data-dimensions='used'" +
+										"data-gauge-max-value='100'" +
+										"data-units='%'" +
+										"data-width='300'" +
+								    		"data-height='200'" +
+										"data-after='-86400'" +
+										"data-points='100'" +
+										"data-gauge-generate-gradient='[0, 80, 90]'" +
+										"data-gauge-gradient-percent-color-0='#a9d70b'" +
+										"data-gauge-gradient-percent-color-80='#f9c802'" +
+										"data-gauge-gradient-percent-color-90='#ff0000'" +
+										"data-gauge-gradient-stroke-color='#E0E0E0'" +
+									"></div>" +
+									"<div data-netdata='system.ram'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='gauge'" +
+										"data-append-options='percentage'" +
+										"data-dimensions='used'" +
+										"data-gauge-max-value='100'" +
+										"data-units='%'" +
+										"data-width='300'" +
+								    		"data-height='200'" +
+										"data-after='-86400'" +
+										"data-points='100'" +
+										"data-gauge-generate-gradient='[0, 80, 90]'" +
+										"data-gauge-gradient-percent-color-0='#a9d70b'" +
+										"data-gauge-gradient-percent-color-80='#f9c802'" +
+										"data-gauge-gradient-percent-color-90='#ff0000'" +
+										"data-gauge-gradient-stroke-color='#E0E0E0'" +
+									"></div>" +
+	/*
+									"<div data-netdata='system.swap'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='gauge'" +
+										"data-append-options='percentage'" +
+										"data-dimensions='used'" +
+										"data-gauge-max-value='100'" +
+										"data-units='%'" +
+										"data-width='300'" +
+								    		"data-height='200'" +
+										"data-after='-86400'" +
+										"data-points='100'" +
+										"data-gauge-generate-gradient='[0, 80, 90]'" +
+										"data-gauge-gradient-percent-color-0='#a9d70b'" +
+										"data-gauge-gradient-percent-color-80='#f9c802'" +
+										"data-gauge-gradient-percent-color-90='#ff0000'" +
+										"data-gauge-gradient-stroke-color='#E0E0E0'" +
+									"></div>" +
+	*/
+									"<div data-netdata='disk_space._'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='gauge'" +
+										"data-append-options='percentage'" +
+										"data-dimensions='used'" +
+										"data-gauge-max-value='100'" +
+										"data-units='%'" +
+										"data-width='300'" +
+								    		"data-height='200'" +
+										"data-after='-86400'" +
+										"data-points='100'" +
+										"data-gauge-generate-gradient='[0, 80, 90]'" +
+										"data-gauge-gradient-percent-color-0='#a9d70b'" +
+										"data-gauge-gradient-percent-color-80='#f9c802'" +
+										"data-gauge-gradient-percent-color-90='#ff0000'" +
+										"data-gauge-gradient-stroke-color='#E0E0E0'" +
+									"></div>" +
+								"</div>" +
+								"<div style='display: inline-block; width: 100%'>" +
+									"<div data-netdata='nodeos_" +  name + ".sync'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='dygraph'" +
+										"data-width='50%'" +
+										"data-height='200'" +
+										"data-after='-86400'" +
+									"></div>" +
+									"<div data-netdata='disk_space._'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='dygraph'" +
+										"data-desired-units='GiB'" +
+										"data-width='50%'" +
+										"data-height='200'" +
+										"data-after='-86400'" +
+									"></div>" +
+									"<div data-netdata='nodeos_" +  name + ".ram_absolute'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='dygraph'" +
+										"data-desired-units='GiB'" +
+										"data-width='50%'" +
+										"data-height='200'" +
+										"data-after='-86400'" +
+									"></div>" +
+									"<div data-netdata='system.ram'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='dygraph'" +
+										"data-desired-units='GiB'" +
+										"data-width='50%'" +
+										"data-height='200'" +
+										"data-after='-86400'" +
+									"></div>" +
+								"</div>" +
+	/*
+									"<div data-netdata='system.swap'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='dygraph'" +
+										"data-desired-units='GiB'" +
+										"data-width='50%'" +
+										"data-height='200'" +
+										"data-after='-86400'" +
+									"></div>" +
+*/
+							"</div>"
+						);
+					}
+				});
+				//$('#' + group_id).tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
+		});
+		$(".tabs").tabs();
+		NETDATA.start();
+	});
+/*
+	$( ".ui-tabs-nav" ).sortable({
+		axis: "x",
+		stop: function() {
+			tabs.tabs( "refresh" );
+		}
+	});
+*/
+});
+</script>
 </html>
