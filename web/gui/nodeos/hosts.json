@@ -1,100 +1,111 @@
 {
-	"Testnets": {
+	"EOS": {
+
 		"eos-testnet-jungle": {
-			"host_ip":	"18.223.252.15",
-			"api_port":	"8888",
-			"active": 	"true",
+			"host_ip": "18.223.252.15",
+			"api_port": "8888",
+			"active": "true",
 			"hostname": "eos-testnet-jungle-aws"
 		},
 		"eos-testnet-cryptokylin": {
-			"host_ip":	"18.220.29.244",
-			"api_port":	"8888",
-			"active": 	"true",
-			"hostname": "eos-testnet-cryptokylin-aws"
+			"host_ip": "3.17.37.4",
+			"api_port": "8888",
+			"active": "true",
+			"hostname": "testnets-aws"
 		},
-		"worbli-testnet": {
-			"host_ip":	"3.16.81.217",
-			"api_port":	"8282",
-			"active": 	"true",
-			"hostname": "worbli-testnet-aws"
-		},
-		"telos-testnet": {
-			"host_ip":	"18.220.29.244",
-			"api_port":	"8282",
-			"active": 	"true",
-			"hostname": "telos-testnet-aws"
-		},
-		"uos-testnet": {
-			"host_ip":	"18.220.29.244",
-			"api_port":	"9282",
-			"active": 	"true",
-			"hostname": "uos-testnet-aws"
-		},
-		"telos-stagenet": {
-			"host_ip":	"172.31.17.115",
-			"api_port":	"8282",
-			"active": 	"",
-			"hostname": "telos-stagenet-aws"
-		}
-	},
-	"EOS Mainnet": {
 		"eos-bp": {
-			"host_ip":	"10.0.1.204",
-			"api_port":	"8282",
-			"active": 	"",
-			"hostname": 	"eos-bp1-aws"
+			"host_ip": "18.220.134.218",
+			"api_port": "8282",
+			"active": "",
+			"hostname": "eos-bp1-aws"
 		},
 		"eos-api": {
-			"host_ip":	"10.0.1.31",
-			"api_port":	"8282",
-			"active": 	"",
-			"hostname": 	"eos-api2-aws"
+			"host_ip": "18.217.227.59",
+			"api_port": "8282",
+			"active": "",
+			"hostname": "eos-api2-aws"
 		},
 		"eos-seed": {
-			"host_ip":	"10.0.1.93",
-			"api_port":	"8282",
-			"active": 	"",
-			"hostname": 	"eos-seed-aws"
+			"host_ip": "3.17.1.172",
+			"api_port": "8282",
+			"active": "",
+			"hostname": "eos-seed-aws"
 		}
 	},
-	"Worbli Mainnet": {
+	"Worbli": {
 		"worbli-bp": {
-			"host_ip":	"10.0.1.13",
-			"api_port":	"8282",
-			"active": 	"",
+			"host_ip": "10.0.1.13",
+			"api_port": "8282",
+			"active": "",
 			"hostname": "worbli-bp1-aws"
 		},
 		"worbli-api": {
-			"host_ip":	"10.0.0.125",
-			"api_port":	"8282",
-			"active": 	"",
+			"host_ip": "10.0.0.125",
+			"api_port": "8282",
+			"active": "",
 			"hostname": "worbli-api1-aws"
 		},
 		"worbli-seed": {
-			"host_ip":	"10.0.0.93",
-			"api_port":	"8282",
-			"active": 	"",
+			"host_ip": "10.0.0.93",
+			"api_port": "8282",
+			"active": "",
 			"hostname": "worbli-seed-aws"
+		},
+		"worbli-testnet": {
+			"host_ip": "3.16.81.217",
+			"api_port": "8282",
+			"active": "true",
+			"hostname": "worbli-testnet-aws"
 		}
 	},
-	"Telos Mainnet": {
+	"Telos": {
 		"telos-bp": {
-			"host_ip":	"11.0.2.7",
-			"api_port":	"8282",
-			"active": 	"",
+			"host_ip": "11.0.2.7",
+			"api_port": "8282",
+			"active": "",
 			"hostname": "telos-bp1-aws"
 		},
 		"telos-api": {
-			"host_ip":	"11.0.1.101",
-			"api_port":	"8282",
-			"active": 	"",
+			"host_ip": "11.0.1.101",
+			"api_port": "8282",
+			"active": "",
 			"hostname": "telos-api1-aws"
 		},
 		"telos-seed": {
-			"host_ip":	"11.0.1.108",
-			"api_port":	"8282",
-			"active": 	"",
+			"host_ip": "11.0.1.108",
+			"api_port": "8282",
+			"active": "",
 			"hostname": "telos-seed-aws"
+		},
+		"telos-testnet": {
+			"host_ip": "3.17.37.4",
+			"api_port": "8282",
+			"active": "true",
+			"hostname": "testnets-aws"
+		},
+		"telos-stagenet": {
+			"host_ip": "18.218.255.3",
+			"api_port": "8282",
+			"active": "true",
+			"hostname": "telos-stagenet-aws"
 		}
+	},
+	"UOS": {
+		"uos-testnet": {
+			"host_ip": "3.17.37.4",
+			"api_port": "9282",
+			"active": "true",
+			"hostname": "testnets-aws"
+		}
+
+	},
+	"ORE": {
+		"ore-testnet": {
+			"host_ip": "3.17.37.4",
+			"api_port": "8876",
+			"active": "true",
+			"hostname": "testnets-aws"
+		}
+
 	}
 }

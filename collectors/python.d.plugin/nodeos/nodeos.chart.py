@@ -31,7 +31,7 @@ CHARTS = {
         ]
     },
     'ram_absolute': {
-        'options': [None, 'Nodeos RAM', 'B', 'ram', 'nodeos.ram', 'stacked'],
+        'options': [None, 'Nodeos RAM', 'B', 'ram', 'nodeos.ram_absolute', 'stacked'],
         'lines': [
             ['free'],
             ['used']

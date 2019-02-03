@@ -50,7 +50,7 @@ $( document ).ready(function() {
 									"<div data-netdata='nodeos_" +  name + ".sync'" +
 										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
 										"data-chart-library='gauge'" +
-										"data-width='300'" +
+										"data-width='20%'" +
 										"data-height='200'" +
 										"data-after='-86400'" +
 										"data-points='100'" +
@@ -68,7 +68,7 @@ $( document ).ready(function() {
 										"data-dimensions='used'" +
 										"data-gauge-max-value='100'" +
 										"data-units='%'" +
-										"data-width='300'" +
+										"data-width='20%'" +
 								    		"data-height='200'" +
 										"data-after='-86400'" +
 										"data-points='100'" +
@@ -85,7 +85,7 @@ $( document ).ready(function() {
 										"data-dimensions='used'" +
 										"data-gauge-max-value='100'" +
 										"data-units='%'" +
-										"data-width='300'" +
+										"data-width='20%'" +
 								    		"data-height='200'" +
 										"data-after='-86400'" +
 										"data-points='100'" +
@@ -103,7 +103,7 @@ $( document ).ready(function() {
 										"data-dimensions='used'" +
 										"data-gauge-max-value='100'" +
 										"data-units='%'" +
-										"data-width='300'" +
+										"data-width='20%'" +
 								    		"data-height='200'" +
 										"data-after='-86400'" +
 										"data-points='100'" +
@@ -121,10 +121,26 @@ $( document ).ready(function() {
 										"data-dimensions='used'" +
 										"data-gauge-max-value='100'" +
 										"data-units='%'" +
-										"data-width='300'" +
+										"data-width='20%'" +
 								    		"data-height='200'" +
 										"data-after='-86400'" +
 										"data-points='100'" +
+										"data-gauge-generate-gradient='[0, 80, 90]'" +
+										"data-gauge-gradient-percent-color-0='#a9d70b'" +
+										"data-gauge-gradient-percent-color-80='#f9c802'" +
+										"data-gauge-gradient-percent-color-90='#ff0000'" +
+										"data-gauge-gradient-stroke-color='#E0E0E0'" +
+									"></div>" +
+									"<div data-netdata='system.cpu'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='gauge'" +
+										"data-gauge-max-value='100'" +
+										"data-title='CPU'" + 
+										"data-units='%'" +
+										"data-width='20%'" +
+								    		"data-height='200'" +
+										"data-after='-420'" +
+										"data-points='420'" +
 										"data-gauge-generate-gradient='[0, 80, 90]'" +
 										"data-gauge-gradient-percent-color-0='#a9d70b'" +
 										"data-gauge-gradient-percent-color-80='#f9c802'" +
