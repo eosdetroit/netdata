@@ -156,10 +156,19 @@ $( document ).ready(function() {
 										"data-height='200'" +
 										"data-after='-86400'" +
 									"></div>" +
+/*
 									"<div data-netdata='disk_space._'" +
 										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
 										"data-chart-library='dygraph'" +
 										"data-desired-units='GiB'" +
+										"data-width='50%'" +
+										"data-height='200'" +
+										"data-after='-86400'" +
+									"></div>" +
+*/
+									"<div data-netdata='nodeos_log_" +  name + ".blocks_produced'" +
+										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+										"data-chart-library='dygraph'" +
 										"data-width='50%'" +
 										"data-height='200'" +
 										"data-after='-86400'" +
