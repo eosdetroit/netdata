@@ -76,8 +76,8 @@ class Service(LogService):
 		last = now+relativedelta(seconds=-126)
 		for line in tail("-n 500", self.log_path, _iter=True):
 			if "Received block" in line or "Produced block" in line:
-			    	chunks = line.split(" ")
-				info = {'date': chunks[2], 'block': chunks[20].split("#")[1], 'producer': chunks[25], 'transactions': chunks[27].split(",")[0], 'latency': chunks[33] }
+				match = re.match( r'^info  (.*) thread.* signed by (.*) \[.*', line)
+				info = {'date': match.group(1), 'producer': match.group(2) }
 				date = parse(info["date"])
 				offset = -self.configuration.get('timezone_offset') * 3600 if self.configuration.get('timezone_offset') else 0
 				date = date+relativedelta(seconds=offset)
