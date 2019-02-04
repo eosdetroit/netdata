@@ -100,7 +100,7 @@
 
 	},
 	"ORE": {
-		"ore-testnet": {
+		"ore-mainnet": {
 			"host_ip": "3.17.37.4",
 			"api_port": "8876",
 			"active": "true",
