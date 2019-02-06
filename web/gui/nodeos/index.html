@@ -20,11 +20,31 @@
 		var netdataTheme = 'slate';
 		var netdataDontStart = true;
 	</script>
-	<script type="text/javascript" src="http://localhost:19999/dashboard.js"></script>
+	<script type="text/javascript" src="http://monitor.eosdetroit.io:19999/dashboard.js"></script>
 </head>
 <body>
 	<div class="tabs" id="container">
-		<ul id="groups-tabs"/>
+		<ul id="groups-tabs">
+			<li><a href='#all'>All</a></li>
+		</ul>
+		<div id="all">
+			<div  class="panel panel-primary">
+				<div class="panel-heading"><h4>Nodeos Synchronization</h4></div>
+				<div class="panel-body" id="all-sync" />
+			</div>
+			<div  class="panel panel-primary">
+				<div class="panel-heading"><h4>Nodeos RAM</h4></div>
+				<div class="panel-body" id="all-nodeos-ram"/>
+			</div>
+			<div  class="panel panel-primary">
+				<div class="panel-heading"><h4>CPU</h4></div>
+				<div class="panel-body" id="all-cpu"/>
+			</div>
+			<div  class="panel panel-primary">
+				<div class="panel-heading"><h4>Disk Usage</h4></div>
+				<div class="panel-body" id="all-disk"/>
+			</div>
+		</div>
 	</div>
 </body>
 <script type="text/javascript">
@@ -41,12 +61,84 @@ $( document ).ready(function() {
 				$.each(nodes, function( name, params ) {
 					if (params["active"] == "true"){
 						var hostname = params["hostname"];
+						$("#all-sync").append(
+							"<div data-netdata='nodeos_" +  name + ".sync'" +
+								"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+								"data-chart-library='gauge'" +
+								"data-width='10%'" +
+								"data-height='20'" +
+								"data-after='-86400'" +
+								"data-points='100'" +
+								"data-units='ms'" +
+								"data-gauge-generate-gradient='[0, 250, 500]'" +
+								"data-gauge-gradient-percent-color-0='#a9d70b'" +
+								"data-gauge-gradient-percent-color-250='#f9c802'" +
+								"data-gauge-gradient-percent-color-500='#ff0000'" +
+								"data-gauge-gradient-stroke-color='#E0E0E0'" +
+							"></div>" 
+						);
+						$("#all-nodeos-ram").append(
+							"<div data-netdata='nodeos_" +  name + ".ram'" +
+								"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+								"data-chart-library='gauge'" +
+								"data-append-options='percentage'" +
+								"data-dimensions='used'" +
+								"data-gauge-max-value='100'" +
+								"data-units='%'" +
+								"data-width='10%'" +
+						    		"data-height='20'" +
+								"data-after='-86400'" +
+								"data-points='100'" +
+								"data-gauge-generate-gradient='[0, 80, 90]'" +
+								"data-gauge-gradient-percent-color-0='#a9d70b'" +
+								"data-gauge-gradient-percent-color-80='#f9c802'" +
+								"data-gauge-gradient-percent-color-90='#ff0000'" +
+								"data-gauge-gradient-stroke-color='#E0E0E0'" +
+							"></div>" 
+						);
+						$("#all-cpu").append(
+							"<div data-netdata='system.cpu'" +
+								"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+								"data-chart-library='gauge'" +
+								"data-gauge-max-value='100'" +
+								"data-title='CPU'" + 
+								"data-units='%'" +
+								"data-width='10%'" +
+						    		"data-height='20'" +
+								"data-after='-420'" +
+								"data-points='420'" +
+								"data-gauge-generate-gradient='[0, 80, 90]'" +
+								"data-gauge-gradient-percent-color-0='#a9d70b'" +
+								"data-gauge-gradient-percent-color-80='#f9c802'" +
+								"data-gauge-gradient-percent-color-90='#ff0000'" +
+								"data-gauge-gradient-stroke-color='#E0E0E0'" +
+							"></div>" 
+						);
+						$("#all-disk").append(
+							"<div data-netdata='disk_space._'" +
+								"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
+								"data-chart-library='gauge'" +
+								"data-append-options='percentage'" +
+								"data-dimensions='used'" +
+								"data-gauge-max-value='100'" +
+								"data-units='%'" +
+								"data-width='10%'" +
+						    		"data-height='20'" +
+								"data-after='-86400'" +
+								"data-points='100'" +
+								"data-gauge-generate-gradient='[0, 80, 90]'" +
+								"data-gauge-gradient-percent-color-0='#a9d70b'" +
+								"data-gauge-gradient-percent-color-80='#f9c802'" +
+								"data-gauge-gradient-percent-color-90='#ff0000'" +
+								"data-gauge-gradient-stroke-color='#E0E0E0'" +
+							"></div>" 
+						);
 						$("#nodes-tabs-" + group_id ).append(
 							"<li><a href='#nodes-tabs-content-" + name + "'>" + name + "</a></li>"
 						);
 						$("#" + group_id).append(
-							"<div style='display: inline-block; width: 100%' id='nodes-tabs-content-" + name + "'>" +
-								"<div style='display: inline-block; width: 100%'>" +
+							"<div class='panel panel-default' style='display: inline-block; width: 100%' id='nodes-tabs-content-" + name + "'>" +
+								"<div class='panel-body' style='display: inline-block; width: 100%'>" +
 									"<div data-netdata='nodeos_" +  name + ".sync'" +
 										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
 										"data-chart-library='gauge'" +
