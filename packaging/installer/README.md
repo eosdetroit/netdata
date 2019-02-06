@@ -41,7 +41,7 @@ bash <(curl -Ss https://my-netdata.io/kickstart.sh)
 Verify the integrity of the script with this:
 
 ```bash
-[ "6c15b7d7d31dc130631c42da65df71ae" = "$(curl -Ss https://my-netdata.io/kickstart.sh | md5sum | cut -d ' ' -f 1)" ] && echo "OK, VALID" || echo "FAILED, INVALID"
+[ "b4632ca6c651de0f667e6d4f6e1015fe" = "$(curl -Ss https://my-netdata.io/kickstart.sh | md5sum | cut -d ' ' -f 1)" ] && echo "OK, VALID" || echo "FAILED, INVALID"
 ```
 *It should print `OK, VALID` if the script is the one we ship.*
 
@@ -60,6 +60,8 @@ For automated installs, append a space + `--dont-wait` to the command line. You 
 ```bash
   bash <(curl -Ss https://my-netdata.io/kickstart.sh) --dont-wait --dont-start-it
 ```
+
+If you don't want to receive automatic updates, add `--no-updates` when executing `kickstart.sh` script.
 
 </details>&nbsp;<br/>
 
@@ -93,7 +95,7 @@ To install Netdata with a binary package on any Linux distro, any kernel version
 Verify the integrity of the script with this:
 
 ```bash
-[ "a5c16b3126b696ff7b4c8d8d8dc6957d" = "$(curl -Ss https://my-netdata.io/kickstart-static64.sh | md5sum | cut -d ' ' -f 1)" ] && echo "OK, VALID" || echo "FAILED, INVALID"
+[ "ac8e5cf25399b08c42d37e1a53e1a6d3" = "$(curl -Ss https://my-netdata.io/kickstart-static64.sh | md5sum | cut -d ' ' -f 1)" ] && echo "OK, VALID" || echo "FAILED, INVALID"
 ```
 
 *It should print `OK, VALID` if the script is the one we ship.*

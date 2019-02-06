@@ -1246,7 +1246,7 @@ if (typeof netdataShowAlarms === 'undefined') {
 }
 
 if (typeof netdataRegistryAfterMs !== 'number' || netdataRegistryAfterMs < 0) {
-    netdataRegistryAfterMs = 1500;
+    netdataRegistryAfterMs = 0; // 1500;
 }
 
 if (typeof netdataRegistry === 'undefined') {
@@ -1704,6 +1704,8 @@ NETDATA.timeout = {
 };
 
 NETDATA.timeout.init();
+// Codacy declarations
+/* global netdataTheme */
 
 NETDATA.themes = {
     white: {
@@ -1795,6 +1797,10 @@ NETDATA.colors = NETDATA.themes.current.colors;
 //                         (blue)     (red)      (orange)   (green)    (pink)     (brown)    (purple)   (yellow)   (gray)
 //NETDATA.colors        = [ '#5DA5DA', '#F15854', '#FAA43A', '#60BD68', '#F17CB0', '#B2912F', '#B276B2', '#DECF3F', '#4D4D4D' ];
 // dygraph
+
+// Codacy declarations
+/* global smoothPlotter */
+/* global Dygraph */
 
 NETDATA.dygraph = {
     smooth: false
@@ -4979,6 +4985,9 @@ NETDATA.commonColors = {
 };
 
 // *** src/dashboard.js/main.js
+
+// Codacy declarations
+/* global clipboard */
 
 if (NETDATA.options.debug.main_loop) {
     console.log('welcome to NETDATA');
@@ -9677,6 +9686,7 @@ NETDATA.alarms = {
 
 NETDATA.registry = {
     server: null,         // the netdata registry server
+    isCloudEnabled: false,// is netdata.cloud functionality enabled?
     cloudBaseURL: null,   // the netdata cloud base url
     person_guid: null,    // the unique ID of this browser / user
     machine_guid: null,   // the unique ID the netdata server that served dashboard.js
@@ -9685,8 +9695,17 @@ NETDATA.registry = {
     machines_array: null, // the user's other URLs in an array
     person_urls: null,
 
+    MASKED_DATA: "***",
+
+    isUsingGlobalRegistry: function() {
+        return NETDATA.registry.server == "https://registry.my-netdata.io";
+    },
+
+    isRegistryEnabled: function() {
+        return !(NETDATA.registry.isUsingGlobalRegistry() || isSignedIn())
+    },
+
     parsePersonUrls: function (person_urls) {
-        // console.log(person_urls);
         NETDATA.registry.person_urls = person_urls;
 
         if (person_urls) {
@@ -9739,14 +9758,21 @@ NETDATA.registry = {
         NETDATA.registry.hello(NETDATA.serverDefault, function (data) {
             if (data) {
                 NETDATA.registry.server = data.registry;
-                NETDATA.registry.cloudBaseURL = data.cloud_base_url;
+                if (data.cloud_base_url != "") {
+                    NETDATA.registry.isCloudEnabled = true;
+                    NETDATA.registry.cloudBaseURL = data.cloud_base_url;
+                } else {
+                    NETDATA.registry.isCloudEnabled = false;
+                    NETDATA.registry.cloudBaseURL = "";
+                }
                 NETDATA.registry.machine_guid = data.machine_guid;
                 NETDATA.registry.hostname = data.hostname;
-
+                if (dataLayer) {
+                    if (data.anonymous_statistics) dataLayer.push({"anonymous_statistics" : "true", "machine_guid" : data.machine_guid});
+                }
                 NETDATA.registry.access(2, function (person_urls) {
                     NETDATA.registry.parsePersonUrls(person_urls);
-
-                });
+                });    
             }
         });
     },
@@ -9789,13 +9815,25 @@ NETDATA.registry = {
     },
 
     access: function (max_redirects, callback) {
+        let name = NETDATA.registry.MASKED_DATA;
+        let url = NETDATA.registry.MASKED_DATA;
+
+        if (!NETDATA.registry.isUsingGlobalRegistry()) {
+            // If the user is using a private registry keep sending identifiable
+            // data.
+            name = NETDATA.registry.hostname;
+            url = NETDATA.serverDefault;
+        } 
+
+        console.log("ACCESS", name, url);
+
         // send ACCESS to a netdata registry:
         // 1. it lets it know we are accessing a netdata server (its machine GUID and its URL)
         // 2. it responds with a list of netdata servers we know
         // the registry identifies us using a cookie it sets the first time we access it
         // the registry may respond with a redirect URL to send us to another registry
         $.ajax({
-            url: NETDATA.registry.server + '/api/v1/registry?action=access&machine=' + NETDATA.registry.machine_guid + '&name=' + encodeURIComponent(NETDATA.registry.hostname) + '&url=' + encodeURIComponent(NETDATA.serverDefault), // + '&visible_url=' + encodeURIComponent(document.location),
+            url: NETDATA.registry.server + '/api/v1/registry?action=access&machine=' + NETDATA.registry.machine_guid + '&name=' + encodeURIComponent(name) + '&url=' + encodeURIComponent(url), // + '&visible_url=' + encodeURIComponent(document.location),
             async: true,
             cache: false,
             headers: {
@@ -9827,14 +9865,14 @@ NETDATA.registry = {
                             return callback(null);
                         }
                     }
-                }
-                else {
+                } else {
                     if (typeof data.person_guid === 'string') {
                         NETDATA.registry.person_guid = data.person_guid;
                     }
 
                     if (typeof callback === 'function') {
-                        return callback(data.urls);
+                        const urls = data.urls.filter((u) => u[1] !== NETDATA.registry.MASKED_DATA);
+                        return callback(urls);
                     }
                 }
             })
