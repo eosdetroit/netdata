@@ -187,25 +187,6 @@ $( document ).ready(function() {
 										"data-gauge-gradient-percent-color-90='#ff0000'" +
 										"data-gauge-gradient-stroke-color='#E0E0E0'" +
 									"></div>" +
-	/*
-									"<div data-netdata='system.swap'" +
-										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
-										"data-chart-library='gauge'" +
-										"data-append-options='percentage'" +
-										"data-dimensions='used'" +
-										"data-gauge-max-value='100'" +
-										"data-units='%'" +
-										"data-width='20%'" +
-								    		"data-height='200'" +
-										"data-after='-86400'" +
-										"data-points='100'" +
-										"data-gauge-generate-gradient='[0, 80, 90]'" +
-										"data-gauge-gradient-percent-color-0='#a9d70b'" +
-										"data-gauge-gradient-percent-color-80='#f9c802'" +
-										"data-gauge-gradient-percent-color-90='#ff0000'" +
-										"data-gauge-gradient-stroke-color='#E0E0E0'" +
-									"></div>" +
-	*/
 									"<div data-netdata='disk_space._'" +
 										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
 										"data-chart-library='gauge'" +
@@ -248,16 +229,6 @@ $( document ).ready(function() {
 										"data-height='200'" +
 										"data-after='-86400'" +
 									"></div>" +
-/*
-									"<div data-netdata='disk_space._'" +
-										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
-										"data-chart-library='dygraph'" +
-										"data-desired-units='GiB'" +
-										"data-width='50%'" +
-										"data-height='200'" +
-										"data-after='-86400'" +
-									"></div>" +
-*/
 									"<div data-netdata='nodeos_log_" +  name + ".blocks_produced'" +
 										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
 										"data-chart-library='dygraph'" +
@@ -282,33 +253,14 @@ $( document ).ready(function() {
 										"data-after='-86400'" +
 									"></div>" +
 								"</div>" +
-	/*
-									"<div data-netdata='system.swap'" +
-										"data-host='http://" + params["host_ip"] + ":19999" + "'" + 
-										"data-chart-library='dygraph'" +
-										"data-desired-units='GiB'" +
-										"data-width='50%'" +
-										"data-height='200'" +
-										"data-after='-86400'" +
-									"></div>" +
-*/
 							"</div>"
 						);
 					}
 				});
-				//$('#' + group_id).tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
 		});
 		$(".tabs").tabs();
 		NETDATA.start();
 	});
-/*
-	$( ".ui-tabs-nav" ).sortable({
-		axis: "x",
-		stop: function() {
-			tabs.tabs( "refresh" );
-		}
-	});
-*/
 });
 </script>
 </html>
