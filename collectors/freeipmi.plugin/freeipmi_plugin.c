@@ -28,6 +28,20 @@
 
 #ifdef HAVE_FREEIPMI
 
+#define IPMI_PARSE_DEVICE_LAN_STR       "lan"
+#define IPMI_PARSE_DEVICE_LAN_2_0_STR   "lan_2_0"
+#define IPMI_PARSE_DEVICE_LAN_2_0_STR2  "lan20"
+#define IPMI_PARSE_DEVICE_LAN_2_0_STR3  "lan_20"
+#define IPMI_PARSE_DEVICE_LAN_2_0_STR4  "lan2_0"
+#define IPMI_PARSE_DEVICE_LAN_2_0_STR5  "lanplus"
+#define IPMI_PARSE_DEVICE_KCS_STR       "kcs"
+#define IPMI_PARSE_DEVICE_SSIF_STR      "ssif"
+#define IPMI_PARSE_DEVICE_OPENIPMI_STR  "openipmi"
+#define IPMI_PARSE_DEVICE_OPENIPMI_STR2 "open"
+#define IPMI_PARSE_DEVICE_SUNBMC_STR    "sunbmc"
+#define IPMI_PARSE_DEVICE_SUNBMC_STR2   "bmc"
+#define IPMI_PARSE_DEVICE_INTELDCMI_STR "inteldcmi"
+
 // ----------------------------------------------------------------------------
 
 // callback required by fatal()
@@ -324,7 +338,8 @@ static void netdata_mark_as_not_updated() {
 }
 
 static void send_chart_to_netdata_for_units(int units) {
-    struct sensor *sn;
+    struct sensor *sn, *sn_stored;
+    int dupfound, multiplier;
 
     switch(units) {
         case IPMI_MONITORING_SENSOR_UNITS_CELSIUS:
@@ -384,29 +399,44 @@ static void send_chart_to_netdata_for_units(int units) {
     }
 
     for(sn = sensors_root; sn; sn = sn->next) {
+        dupfound = 0;
         if(sn->sensor_units == units && sn->updated && !sn->ignore) {
             sn->exposed = 1;
+            multiplier = 1;
 
             switch(sn->sensor_reading_type) {
+                case IPMI_MONITORING_SENSOR_READING_TYPE_DOUBLE:
+                    multiplier = 1000;
+                    // fallthrough
                 case IPMI_MONITORING_SENSOR_READING_TYPE_UNSIGNED_INTEGER8_BOOL:
                 case IPMI_MONITORING_SENSOR_READING_TYPE_UNSIGNED_INTEGER32:
-                    printf("DIMENSION i%d_n%d_r%d '%s i%d' absolute 1 1\n"
-                           , sn->sensor_number
-                           , sn->record_id
-                           , sn->sensor_reading_type
-                           , sn->sensor_name
-                           , sn->sensor_number
-                    );
-                    break;
-
-                case IPMI_MONITORING_SENSOR_READING_TYPE_DOUBLE:
-                    printf("DIMENSION i%d_n%d_r%d '%s i%d' absolute 1 1000\n"
-                           , sn->sensor_number
-                           , sn->record_id
-                           , sn->sensor_reading_type
-                           , sn->sensor_name
-                           , sn->sensor_number
-                    );
+                    for (sn_stored = sensors_root; sn_stored; sn_stored = sn_stored->next) {
+                        if (sn_stored == sn) continue;
+                        // If the name is a duplicate, append the sensor number
+                        if ( !strcmp(sn_stored->sensor_name, sn->sensor_name) ) {
+                            dupfound = 1;
+                            printf("DIMENSION i%d_n%d_r%d '%s i%d' absolute 1 %d\n"
+                                   , sn->sensor_number
+                                   , sn->record_id
+                                   , sn->sensor_reading_type
+                                   , sn->sensor_name
+                                   , sn->sensor_number
+                                   , multiplier
+                            );
+                            break;
+                        }
+                    }
+                    // No duplicate name was found, display it just with Name
+                    if (!dupfound) {
+                        // display without ID
+                        printf("DIMENSION i%d_n%d_r%d '%s' absolute 1 %d\n"
+                               , sn->sensor_number
+                               , sn->record_id
+                               , sn->sensor_reading_type
+                               , sn->sensor_name
+                               , multiplier
+                        );
+                    }
                     break;
 
                 default:
@@ -1548,6 +1578,49 @@ int ipmi_detect_speed_secs(struct ipmi_monitoring_ipmi_config *ipmi_config) {
     return (int)(( total * 2 / checks / 1000000 ) + 1);
 }
 
+int parse_inband_driver_type (const char *str)
+{
+    assert (str);
+
+    if (strcasecmp (str, IPMI_PARSE_DEVICE_KCS_STR) == 0)
+        return (IPMI_MONITORING_DRIVER_TYPE_KCS);
+    else if (strcasecmp (str, IPMI_PARSE_DEVICE_SSIF_STR) == 0)
+        return (IPMI_MONITORING_DRIVER_TYPE_SSIF);
+        /* support "open" for those that might be used to
+		 * ipmitool.
+		 */
+    else if (strcasecmp (str, IPMI_PARSE_DEVICE_OPENIPMI_STR) == 0
+             || strcasecmp (str, IPMI_PARSE_DEVICE_OPENIPMI_STR2) == 0)
+        return (IPMI_MONITORING_DRIVER_TYPE_OPENIPMI);
+        /* support "bmc" for those that might be used to
+		 * ipmitool.
+		 */
+    else if (strcasecmp (str, IPMI_PARSE_DEVICE_SUNBMC_STR) == 0
+             || strcasecmp (str, IPMI_PARSE_DEVICE_SUNBMC_STR2) == 0)
+        return (IPMI_MONITORING_DRIVER_TYPE_SUNBMC);
+
+    return (-1);
+}
+
+int parse_outofband_driver_type (const char *str)
+{
+    assert (str);
+
+    if (strcasecmp (str, IPMI_PARSE_DEVICE_LAN_STR) == 0)
+        return (IPMI_MONITORING_PROTOCOL_VERSION_1_5);
+        /* support "lanplus" for those that might be used to ipmitool.
+		 * support typo variants to ease.
+		 */
+    else if (strcasecmp (str, IPMI_PARSE_DEVICE_LAN_2_0_STR) == 0
+             || strcasecmp (str, IPMI_PARSE_DEVICE_LAN_2_0_STR2) == 0
+             || strcasecmp (str, IPMI_PARSE_DEVICE_LAN_2_0_STR3) == 0
+             || strcasecmp (str, IPMI_PARSE_DEVICE_LAN_2_0_STR4) == 0
+             || strcasecmp (str, IPMI_PARSE_DEVICE_LAN_2_0_STR5) == 0)
+        return (IPMI_MONITORING_PROTOCOL_VERSION_2_0);
+
+    return (-1);
+}
+
 int main (int argc, char **argv) {
 
     // ------------------------------------------------------------------------
@@ -1618,6 +1691,12 @@ int main (int argc, char **argv) {
                     "  password PASS           connect to remote IPMI host\n"
                     "                          default: local IPMI processor\n"
                     "\n"
+                    " driver-type IPMIDRIVER\n"
+                    "                          Specify the driver type to use instead of doing an auto selection. \n"
+                    "                          The currently available outofband drivers are LAN and  LAN_2_0,\n"
+                    "                          which  perform  IPMI  1.5  and  IPMI  2.0 respectively. \n"
+                    "                          The currently available inband drivers are KCS, SSIF, OPENIPMI and SUNBMC.\n"
+                    "\n"
                     "  sdr-cache-dir PATH      directory for SDR cache files\n"
                     "                          default: %s\n"
                     "\n"
@@ -1676,6 +1755,17 @@ int main (int argc, char **argv) {
             if(debug) fprintf(stderr, "freeipmi.plugin: password set to '%s'\n", password);
             continue;
         }
+        else if(strcmp("driver-type", argv[i]) == 0) {
+            if (hostname) {
+                protocol_version=parse_outofband_driver_type(argv[++i]);
+                if(debug) fprintf(stderr, "freeipmi.plugin: outband protocol version set to '%d'\n", protocol_version);
+            }
+            else {
+                driver_type=parse_inband_driver_type(argv[++i]);
+                if(debug) fprintf(stderr, "freeipmi.plugin: inband driver type set to '%d'\n", driver_type);
+            }
+            continue;
+        }
         else if(i < argc && strcmp("sdr-cache-dir", argv[i]) == 0) {
             sdr_cache_directory = argv[++i];
             if(debug) fprintf(stderr, "freeipmi.plugin: SDR cache directory set to '%s'\n", sdr_cache_directory);
@@ -1716,7 +1806,10 @@ int main (int argc, char **argv) {
 
     _init_ipmi_config(&ipmi_config);
 
-    if(debug) fprintf(stderr, "freeipmi.plugin: calling ipmi_monitoring_init()\n");
+    if(debug) {
+        fprintf(stderr, "freeipmi.plugin: calling ipmi_monitoring_init()\n");
+        ipmimonitoring_init_flags|=IPMI_MONITORING_FLAGS_DEBUG|IPMI_MONITORING_FLAGS_DEBUG_IPMI_PACKETS;
+    }
 
     if(ipmi_monitoring_init(ipmimonitoring_init_flags, &errnum) < 0)
         fatal("ipmi_monitoring_init: %s", ipmi_monitoring_ctx_strerror(errnum));

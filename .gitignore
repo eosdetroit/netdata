@@ -50,8 +50,24 @@ freeipmi.plugin
 cups.plugin
 !cups.plugin/
 
+nfacct.plugin
+!nfacct.plugin/
+
+xenstat.plugin
+!xenstat.plugin/
+
+perf.plugin
+!perf.plugin/
+
+slabinfo.plugin
+!slabinfo.plugin/
+
 cgroup-network
 !cgroup-network/
+
+# protoc generated files
+*.pb.cc
+*.pb.h
 
 # installation artifacts
 packaging/installer/.environment.sh
@@ -64,8 +80,7 @@ packaging/makeself/tmp/
 # coverity
 cov-int/
 netdata-coverity-analysis.tgz
-.coverity-token
-.coverity-build
+.coverity-scan.conf
 
 .cproject/
 .idea/
@@ -74,7 +89,6 @@ netdata-coverity-analysis.tgz
 .settings/
 README
 TODO.md
-netdata.conf
 TODO.txt
 
 web/gui/chart-info/
@@ -106,9 +120,12 @@ collectors/charts.d.plugin/charts.d.plugin
 collectors/node.d.plugin/node.d.plugin
 collectors/python.d.plugin/python.d.plugin
 collectors/fping.plugin/fping.plugin
+collectors/ioping.plugin/ioping.plugin
+collectors/go.d.plugin
 
 # installer generated files
-netdata-uninstaller.sh
+/netdata-uninstaller.sh
+/netdata-updater.sh
 
 # cmake files
 cmake-build-debug/
@@ -121,8 +138,7 @@ cmake_install.cmake
 .jetbrains*
 
 .DS_Store
-
-contrib/debian/changelog
+webcopylocal*
 
 # converted diagrams
 diagrams/*.png
@@ -151,6 +167,10 @@ callgrind.out.*
 gmon.out
 gmon.txt
 sitespeed-result/
+tests/acls/acl.sh
+tests/urls/request.sh
+tests/alarm_repetition/alarm.sh
+tests/template_dimension/template_dim.sh
 
 # tests and temp files
 python.d/python-modules-installer.sh
@@ -160,5 +180,7 @@ docs/generator/src
 docs/generator/build
 docs/generator/mkdocs.yml
 
-netdata-updater.sh
 .environment.sh
+
+#CLion files
+netdata.cbp

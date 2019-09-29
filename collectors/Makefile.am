@@ -11,14 +11,18 @@ SUBDIRS = \
     cups.plugin \
     diskspace.plugin \
     fping.plugin \
+    ioping.plugin \
     freebsd.plugin \
     freeipmi.plugin \
     idlejitter.plugin \
     macos.plugin \
     nfacct.plugin \
+    xenstat.plugin \
+    perf.plugin \
     node.d.plugin \
     proc.plugin \
     python.d.plugin \
+    slabinfo.plugin \
     statsd.plugin \
     tc.plugin \
    	$(NULL)
