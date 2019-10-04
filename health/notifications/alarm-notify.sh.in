@@ -33,6 +33,7 @@
 #  - syslog messages by @Ferroin
 #  - Microsoft Team notification by @tioumen
 #  - RocketChat notifications by @Hermsi1337 #3777
+#  - Keybase notifications by @cryptomooner
 
 # -----------------------------------------------------------------------------
 # testing notifications
@@ -166,6 +167,7 @@ prowl
 awssns
 rocketchat
 sms
+keybase
 "
 
 # -----------------------------------------------------------------------------
@@ -336,6 +338,10 @@ SEND_KAFKA="YES"
 KAFKA_URL=
 KAFKA_SENDER_IP=
 
+# keybase configs
+SEND_KEYBASE="YES"
+KEYBASE_URL=
+
 # pagerduty.com configs
 PD_SERVICE_KEY=
 
@@ -485,6 +491,9 @@ filter_recipient_by_criticality() {
 # check telegram
 [ -z "${TELEGRAM_BOT_TOKEN}" ] && SEND_TELEGRAM="NO"
 
+# check keybase
+[ -z "${KEYBASE_URL}" ] && SEND_KEYBASE="NO"
+
 # check kafka
 { [ -z "${KAFKA_URL}" ] || [ -z "${KAFKA_SENDER_IP}" ]; } && SEND_KAFKA="NO"
 
@@ -507,6 +516,7 @@ if [ "${SEND_PUSHOVER}" = "YES" ] ||
 	[ "${SEND_MESSAGEBIRD}" = "YES" ] ||
 	[ "${SEND_KAVENEGAR}" = "YES" ] ||
 	[ "${SEND_TELEGRAM}" = "YES" ] ||
+	[ "${SEND_KEYBASE}" = "YES" ] ||
 	[ "${SEND_PUSHBULLET}" = "YES" ] ||
 	[ "${SEND_KAFKA}" = "YES" ] ||
 	[ "${SEND_FLEEP}" = "YES" ] ||
@@ -522,6 +532,7 @@ if [ "${SEND_PUSHOVER}" = "YES" ] ||
 		SEND_PUSHOVER="NO"
 		SEND_PUSHBULLET="NO"
 		SEND_TELEGRAM="NO"
+		SEND_KEYBASE="NO"
 		SEND_SLACK="NO"
 		SEND_MSTEAM="NO"
 		SEND_ROCKETCHAT="NO"
@@ -643,6 +654,7 @@ proceed=0
 for method in "${SEND_EMAIL}" \
 	"${SEND_PUSHOVER}" \
 	"${SEND_TELEGRAM}" \
+	"${SEND_KEYBASE}" \
 	"${SEND_SLACK}" \
 	"${SEND_ROCKETCHAT}" \
 	"${SEND_ALERTA}" \
@@ -1138,6 +1150,35 @@ send_telegram() {
 				error "failed to send telegram notification for: ${host} ${chart}.${name} is ${status} to '${chatid}' with HTTP error code ${httpcode}."
 			fi
 		done
+
+		[ ${sent} -gt 0 ] && return 0
+	fi
+
+	return 1
+}
+
+# -----------------------------------------------------------------------------
+# keybase sender
+
+send_keybase() {
+	local message="${1}" httpcode sent=0
+
+	case "${status}" in
+	WARNING) emoji="⚠️" ;;
+	CRITICAL) emoji="🔴" ;;
+	CLEAR) emoji="✅" ;;
+	*) emoji="⚪️" ;;
+	esac
+
+	if [ "${SEND_KEYBASE}" = "YES" ] && [ -n "${message}" ]; then
+		httpcode=$(docurl --data-urlencode "message=${emoji} ${message}" "${KEYBASE_URL}")
+
+		if [ "${httpcode}" = "200" ]; then
+			info "sent keybase notification: ${message} with ${status} to '${KEYBASE_URL}'"
+			sent=$((sent + 1))
+		else
+			error "failed to send keybase notification: ${message} with ${status} to '${KEYBASE_URL}' with HTTP error code ${httpcode}."
+		fi
 
 		[ ${sent} -gt 0 ] && return 0
 	fi
@@ -2085,6 +2126,13 @@ send_awssns "${to_awssns}"
 SENT_AWSSNS=$?
 
 # -----------------------------------------------------------------------------
+# send Keybase message
+
+send_keybase "${to_keybase}"
+
+SENT_KEYBASE=$?
+
+# -----------------------------------------------------------------------------
 # send the syslog message
 
 send_syslog "${to_syslog}"
@@ -2269,6 +2317,7 @@ SENT_EMAIL=$?
 for state in "${SENT_EMAIL}" \
 	"${SENT_PUSHOVER}" \
 	"${SENT_TELEGRAM}" \
+	"${SENT_KEYBASE}" \
 	"${SENT_SLACK}" \
 	"${SENT_ROCKETCHAT}" \
 	"${SENT_ALERTA}" \
